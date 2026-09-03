@@ -10,10 +10,6 @@ pipeline {
 
         ECR_REPOSITORY = 'jenkins-ecr-task'
 
-        IMAGE_NAME = 'jenkins-ecr-task'
- 
-        ECR_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}"
-
     }
  
     stages {
@@ -34,7 +30,7 @@ pipeline {
 
             steps {
 
-                bat 'docker build -t ${IMAGE_NAME}:latest .'
+                bat 'docker build -t jenkins-ecr-app:latest .'
 
             }
 
@@ -54,9 +50,7 @@ pipeline {
 
                     bat '''
 
-                        aws ecr get-login-password --region ${AWS_REGION} |
-
-                        docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+                        aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com
 
                     '''
 
@@ -72,9 +66,9 @@ pipeline {
 
                 bat '''
 
-                    docker tag ${IMAGE_NAME}:latest ${ECR_URI}:latest
+                    docker tag jenkins-ecr-app:latest %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com/jenkins-ecr-app:latest
 
-                    docker push ${ECR_URI}:latest
+                    docker push %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com/jenkins-ecr-app:latest
 
                 '''
 
