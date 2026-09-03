@@ -10,53 +10,50 @@ pipeline {
 
     stages {
 
-        stage('Clone GitHub Repository') {
+        stage('Clone GitHub') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/dinesh-1898/jenkins-ecr-task.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ${ECR_REPOSITORY}:${IMAGE_TAG} .'
+                bat 'docker build -t %ECR_REPOSITORY%:%IMAGE_TAG% .'
             }
         }
 
         stage('Login to ECR') {
             steps {
-                sh '''
-                aws ecr get-login-password --region ${AWS_REGION} | \
-                docker login --username AWS --password-stdin \
-                ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
-                '''
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-ecr-credentials']
+                ]) {
+                    bat 'aws ecr get-login-password --region %AWS_REGION% | docker login --username AWS --password-stdin %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com'
+                }
             }
         }
 
-        stage('Tag Docker Image') {
+        stage('Tag Image') {
             steps {
-                sh '''
-                docker tag ${ECR_REPOSITORY}:${IMAGE_TAG} \
-                ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
-                '''
+                bat 'docker tag %ECR_REPOSITORY%:%IMAGE_TAG% %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com/%ECR_REPOSITORY%:%IMAGE_TAG%'
             }
         }
 
-        stage('Push Image to ECR') {
+        stage('Push to ECR') {
             steps {
-                sh '''
-                docker push \
-                ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
-                '''
+                bat 'docker push %AWS_ACCOUNT_ID%.dkr.ecr.%AWS_REGION%.amazonaws.com/%ECR_REPOSITORY%:%IMAGE_TAG%'
             }
         }
 
-        stage('Verify Image') {
+        stage('Verify ECR') {
             steps {
-                sh '''
-                aws ecr describe-images \
-                --repository-name ${ECR_REPOSITORY} \
-                --region ${AWS_REGION}
-                '''
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-ecr-credentials']
+                ]) {
+                    bat 'aws ecr describe-images --repository-name %ECR_REPOSITORY% --region %AWS_REGION%'
+                }
             }
         }
     }
