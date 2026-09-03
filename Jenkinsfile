@@ -34,7 +34,7 @@ pipeline {
 
             steps {
 
-                sh 'docker build -t ${IMAGE_NAME}:latest .'
+                bat 'docker build -t ${IMAGE_NAME}:latest .'
 
             }
 
@@ -52,7 +52,7 @@ pipeline {
 
                 ]) {
 
-                    sh '''
+                    bat '''
 
                         aws ecr get-login-password --region ${AWS_REGION} |
 
@@ -70,7 +70,7 @@ pipeline {
 
             steps {
 
-                sh '''
+                bat '''
 
                     docker tag ${IMAGE_NAME}:latest ${ECR_URI}:latest
 
