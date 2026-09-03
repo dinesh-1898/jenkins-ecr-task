@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jenkins ECR CI/CD Task</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        nav {
+            background-color: #374151;
+            text-align: center;
+            padding: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        section {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2563eb;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        footer {
+            background-color: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Jenkins ECR CI/CD Task</h1>
+        <p>Docker Application deployed using Jenkins and AWS ECR</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#docker">Docker</a>
+        <a href="#jenkins">Jenkins</a>
+        <a href="#aws">AWS ECR</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Home Section -->
+        <section id="home">
+            <h2>Welcome</h2>
+
+            <p>
+                This is a simple Docker application created for the
+                Jenkins-ECR-CI/CD assignment.
+            </p>
+
+            <p class="success">
+                Application Status: Running Successfully
+            </p>
+
+            <hr>
+
+            <h3>CI/CD Flow</h3>
+
+            <ol>
+                <li>Developer pushes code to GitHub</li>
+                <li>Jenkins clones the repository</li>
+                <li>Jenkins builds the Docker image</li>
+                <li>Jenkins authenticates with AWS ECR</li>
+                <li>Docker image is tagged</li>
+                <li>Docker image is pushed to ECR</li>
+                <li>Image is verified in AWS ECR</li>
+            </ol>
+        </section>
+
+        <!-- Docker Section -->
+        <section id="docker">
+            <h2>Docker</h2>
+
+            <p>
+                Docker is used to package this application into a
+                container image.
+            </p>
+
+            <ul>
+                <li>Dockerfile</li>
+                <li>Nginx Web Server</li>
+                <li>Docker Image</li>
+                <li>Docker Container</li>
+            </ul>
+
+            <p>
+                <strong>Image Name:</strong> jenkins-ecr-app
+            </p>
+
+            <p>
+                <strong>Version:</strong> v1
+            </p>
+        </section>
+
+        <!-- Jenkins Section -->
+        <section id="jenkins">
+            <h2>Jenkins CI/CD</h2>
+
+            <p>
+                Jenkins automates the Docker image build and deployment
+                process.
+            </p>
+
+            <table>
+                <tr>
+                    <th>Stage</th>
+                    <th>Status</th>
+                </tr>
+
+                <tr>
+                    <td>Checkout</td>
+                    <td>Completed</td>
+                </tr>
+
+                <tr>
+                    <td>Docker Build</td>
+                    <td>Completed</td>
+                </tr>
+
+                <tr>
+                    <td>ECR Login</td>
+                    <td>Completed</td>
+                </tr>
+
+                <tr>
+                    <td>Docker Tag</td>
+                    <td>Completed</td>
+                </tr>
+
+                <tr>
+                    <td>Docker Push</td>
+                    <td>Completed</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- AWS ECR Section -->
+        <section id="aws">
+            <h2>AWS ECR</h2>
+
+            <p>
+                Amazon Elastic Container Registry (ECR) is used to store
+                the Docker image securely.
+            </p>
+
+            <ul>
+                <li>Private ECR Repository</li>
+                <li>Docker Image Storage</li>
+                <li>Image Versioning</li>
+                <li>Secure AWS Authentication</li>
+            </ul>
+
+            <p>
+                <strong>Repository:</strong> jenkins-ecr-task
+            </p>
+
+            <p>
+                <strong>Image Tag:</strong> v1
+            </p>
+        </section>
+
+        <!-- Form Section -->
+        <section id="contact">
+            <h2>Application Form</h2>
+
+            <form>
+
+                <label for="name">Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                >
+
+                <label for="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                >
+
+                <label for="environment">Environment:</label>
+
+                <select id="environment" name="environment">
+                    <option value="development">Development</option>
+                    <option value="testing">Testing</option>
+                    <option value="staging">Staging</option>
+                    <option value="production">Production</option>
+                </select>
+
+                <label for="message">Message:</label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    placeholder="Enter your message"
+                ></textarea>
+
+                <button type="submit">Submit</button>
+
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Jenkins-ECR-CI/CD Assignment</p>
+        <p>Docker + Jenkins + AWS ECR</p>
+    </footer>
+
+</body>
+</html>
